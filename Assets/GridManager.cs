@@ -22,7 +22,7 @@ public class GridManager : MonoBehaviour
                     // Create a new cube
                     Tile tile = Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity);
                     tile.name = "Tile " + x + ", " + y;
-
+                    Debug.Log(tile);
                     var isOffset = (x + y) % 2 == 1; // Check if the tile is offset
                     tile.Init(isOffset); // Set the color of the tile
                 }

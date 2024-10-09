@@ -12,15 +12,28 @@ public class Tile : MonoBehaviour
     {
         render.color = isOffset ? offsetColor : baseColor;// if for seeing what color to use
     }
-
-    void onMouseEnter()
+    private void OnMouseEnter()
     {
-        highlight.SetActive(true);
+        if (highlight != null)
+        {
+            highlight.SetActive(true);
+            Debug.Log("Mouse Enter");
+        }
+        else
+        {
+            Debug.LogWarning("Highlight GameObject is not assigned.");
+        }
     }
 
-    void onMouseExit()
+    private void OnMouseExit()
     {
-        highlight.SetActive(false);
+        if (highlight != null)
+        {
+            highlight.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("Highlight GameObject is not assigned.");
+        }
     }
-
 }
