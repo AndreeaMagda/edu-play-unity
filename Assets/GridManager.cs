@@ -11,7 +11,8 @@ public class GridManager : MonoBehaviour
 
     public Transform cam;
 
-    private Dictionary<Vector2, Tile> tiles;
+    private Dictionary<Vector2, Tile> tiles= new Dictionary<Vector2, Tile>();
+
 
     void GenerateGrid() // Generate a grid of cubes
     {
