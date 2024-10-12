@@ -11,6 +11,8 @@ public class GridManager : MonoBehaviour
 
     public Transform cam;
 
+    private Dictionary<Vector2, Tile> tiles;
+
     void GenerateGrid() // Generate a grid of cubes
     {
         for (int x = 0; x < width; x++)
@@ -22,15 +24,27 @@ public class GridManager : MonoBehaviour
                     // Create a new cube
                     Tile tile = Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity);
                     tile.name = "Tile " + x + ", " + y;
-                    Debug.Log(tile);
+
                     var isOffset = (x + y) % 2 == 1; // Check if the tile is offset
                     tile.Init(isOffset); // Set the color of the tile
+
+                    tiles[new Vector2(x, y)] = tile; // Add the tile to the dictionary
                 }
             }
         }
 
 
         cam.transform.position = new Vector3((width / 2f) - 0.5f, (height / 2f) - 0.5f, -10); // Move the camera to the center of the grid
+    }
+
+    public Tile GetTile(Vector2 position)
+    {
+        if (tiles.ContainsKey(position))
+        {
+            return tiles[position];
+        }
+        return null;
+     
     }
 
     // Start is called before the first frame update
