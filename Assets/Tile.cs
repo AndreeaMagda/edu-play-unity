@@ -49,7 +49,6 @@ public class Tile : MonoBehaviour
         if (highlight != null)
         {
             highlight.SetActive(true);
-            Debug.Log("Mouse Enter");
         }
         else
         {
