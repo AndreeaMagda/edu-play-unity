@@ -10,7 +10,7 @@ public class Tile : MonoBehaviour
     string baseHex= "FFF7D1";
     Color baseColor;
 
-    string offsetHex = "FFD09B";
+    string offsetHex = "D3EE98";
     Color offsetColor;
 
     string highlightHex = "373333";
