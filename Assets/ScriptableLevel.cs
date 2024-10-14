@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScriptableLevel : MonoBehaviour
+public class ScriptableLevel : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int LevelIndex;
+    public List<SavedTile> GroundTiles;
+    public List<SavedTile> SpecialTiles;
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+public class SavedTile
+{
+    public Vector3Int position;
+    public LevelTile Tile;
 }
