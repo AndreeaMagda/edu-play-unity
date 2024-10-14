@@ -6,7 +6,6 @@ public class GridManager : MonoBehaviour
 {
     public static GridManager Instance;
 
-
     public int width;
     public int height;
 
@@ -51,8 +50,6 @@ public class GridManager : MonoBehaviour
 
         cam.transform.position = new Vector3((width / 2f) - 0.5f, (height / 2f) - 0.5f, -10); // Move the camera to the center of the grid
 
-
-        GameManager.Instance.ChangeState(GameState.MainMenu); // Change the state to the main menu
     }
 
     public Tile GetTile(Vector2 position)
@@ -68,7 +65,7 @@ public class GridManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.GenerateGrid();
+        GenerateGrid();
     }
 
 }
