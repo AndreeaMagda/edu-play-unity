@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps; // Add this for Tilemap
+using System.Linq;
 
 public class TilemapManager : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class TilemapManager : MonoBehaviour
         newLevel.GroundTiles = GetTilesFromMap(groundMap).ToList();
         newLevel.SpecialTiles = GetTilesFromMap(specialMap).ToList();
 
-        ScriptableObjectUtility.SaveLevelFile(newLevel);
+        ScriptableObjectUtil.SaveLevelFile(newLevel);
 
         IEnumerable <SavedTile> GetTilesFromMap(Tilemap map)
         {
@@ -26,13 +27,19 @@ public class TilemapManager : MonoBehaviour
             {
                 if (map.HasTile(pos))
                 {
-                    var LevelTile = map.GetTile<LevelTile>(pos);
+                    var tile = map.GetTile<Tile>(pos);
 
-                    yield return new SavedTile
+                    if (tile != null)
                     {
-                        position = pos,
-                        Tile = LevelTile
-                    };
+                        if (tile is LevelTile levelTile)
+                        {
+                            yield return new SavedTile
+                            {
+                                position = pos,
+                                Tile = levelTile
+                            };
+                        }
+                    }
                 }
             }
         }
