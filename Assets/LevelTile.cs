@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 
 [CreateAssetMenu(fileName = "New Level Tile", menuName = "Tiles/Level Tile")]
 
-public class LevelTile : Tile
+public class LevelTile : TileBase
 {
     public TileType Tile;
 }

@@ -27,7 +27,7 @@ public class TilemapManager : MonoBehaviour
             {
                 if (map.HasTile(pos))
                 {
-                    var tile = map.GetTile<Tile>(pos);
+                    var tile = map.GetTile<LevelTile>(pos);
 
                     if (tile != null)
                     {
