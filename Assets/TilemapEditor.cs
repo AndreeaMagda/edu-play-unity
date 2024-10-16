@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using UnityEditor;
+using System.IO;
 
 [CustomEditor(typeof(TilemapManager))]
 public class TileMapEditor : Editor
@@ -10,11 +11,16 @@ public class TileMapEditor : Editor
     {
         DrawDefaultInspector();
 
-        var script = (TilemapManager) target;
+        var script = (TilemapManager)target;
 
-        if(GUILayout.Button("Save Map"))
+        if (GUILayout.Button("Save Map"))
         {
             script.SaveMap();
+        }
+
+        if (GUILayout.Button("Load Map"))
+        {
+            script.LoadMap();
         }
     }
 }

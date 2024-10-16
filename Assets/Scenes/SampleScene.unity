@@ -240,9 +240,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 818455284}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2578b8ef2d811f4cbf5cee0252aa51e, type: 3}
+  m_Script: {fileID: 11500000, guid: bcac1b385d5e06849b5398283f8be1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridManager: {fileID: 1109576988}
 --- !u!4 &818455286
 Transform:
   m_ObjectHideFlags: 0
@@ -267,7 +268,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1109576987}
-  - component: {fileID: 1109576986}
+  - component: {fileID: 1109576988}
   m_Layer: 0
   m_Name: GridManager
   m_TagString: Untagged
@@ -275,22 +276,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1109576986
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1109576985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf44b05f41eac74488b6643fa9a2f8a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  width: 16
-  height: 9
-  tilePrefab: {fileID: 1827553408}
-  cam: {fileID: 519420032}
 --- !u!4 &1109576987
 Transform:
   m_ObjectHideFlags: 0
@@ -306,6 +291,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1109576988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109576985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfbbab5f018cf85409f9b2f039b6f05c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  width: 16
+  height: 9
+  tilePrefab: {fileID: 1827553408}
+  cam: {fileID: 519420032}
 --- !u!114 &1827553408 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3025304117550473627, guid: dfd41a2ed36e0ec4ebd74e2c33188903, type: 3}

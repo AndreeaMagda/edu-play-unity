@@ -1,70 +1,41 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps; // Add this for Tilemap
-using System.Linq;
+using System.IO;
 
 public class TilemapManager : MonoBehaviour
 {
-    [SerializeField] private Tilemap groundMap, specialMap;
-    [SerializeField] private int LevelIndex;
-
+    public GridManager gridManager;
     public void SaveMap()
     {
-        var newLevel = ScriptableObject.CreateInstance<ScriptableLevel>();
-
-        newLevel.LevelIndex = LevelIndex;
-        newLevel.name = "Level " + LevelIndex;
-
-        newLevel.GroundTiles = GetTilesFromMap(groundMap).ToList();
-        newLevel.SpecialTiles = GetTilesFromMap(specialMap).ToList();
-
-        ScriptableObjectUtil.SaveLevelFile(newLevel);
-
-        IEnumerable <SavedTile> GetTilesFromMap(Tilemap map)
-        {
-            foreach (var pos in map.cellBounds.allPositionsWithin)
-            {
-                if (map.HasTile(pos))
-                {
-                    var tile = map.GetTile<LevelTile>(pos);
-
-                    if (tile != null)
-                    {
-                        if (tile is LevelTile levelTile)
-                        {
-                            yield return new SavedTile
-                            {
-                                position = pos,
-                                Tile = levelTile
-                            };
-                        }
-                    }
-                }
-            }
-        }
+        string filePath = Application.dataPath + "SavedData/grid.json";
+        gridManager.SaveGridToJson(filePath);
     }
 
     public void LoadMap()
     {
+        string filePath = Application.dataPath + "SavedData/grid.json";
 
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            GridData gridData = JsonUtility.FromJson<GridData>(json); // Deserialize
+
+            // Now you can loop through the gridData.tiles to recreate the grid
+            foreach (var tileData in gridData.tiles)
+            {
+                Debug.Log("Loaded tile at: " + tileData.x + ", " + tileData.y);
+                // Use the loaded data to recreate the grid, e.g., instantiate tiles again
+            }
+        }
+        else
+        {
+            Debug.LogError("File not found: " + filePath);
+        }
     }
 
-    public void ClearMap()
+    public void ClearGrid()
     {
-
+        gridManager.ClearTiles();  // Use the public method to clear the grid
     }
 }
-#if UNITY_EDITOR
-
-public static class ScriptableObjectUtil{
-    public static void SaveLevelFile(ScriptableLevel level)
-    {
-        string path = "Assets/Resources/Levels/"+ level.name + ".asset";
-        UnityEditor.AssetDatabase.CreateAsset(level, path);
-        UnityEditor.AssetDatabase.SaveAssets();
-        UnityEditor.AssetDatabase.Refresh();
-    }
-}
-#endif
-
