@@ -14,7 +14,7 @@ public class GridManager : MonoBehaviour
 
     private Dictionary<Vector2, Tile> tiles = new Dictionary<Vector2, Tile>();
 
-   public void GenerateGrid() // Generate a grid of cubes
+   public void GenerateGrid() 
     {
         for (int x = 0; x < width; x++)
         {
@@ -23,7 +23,7 @@ public class GridManager : MonoBehaviour
                 // To create only the edge of the grid
                 if (x == 0 || y == 0 || y == height - 1 || x == width - 1)
                 {
-                    // Create a new cube
+                    
                     Tile tile = Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity);
                     tile.name = "Tile " + x + ", " + y;
 
@@ -93,7 +93,7 @@ public class GridManager : MonoBehaviour
             // Initialize the tile if necessary, based on the tileType
             var isOffset = (tileData.x + tileData.y) % 2 == 1;
             tile.Init(isOffset);
-
+         
             //Set the colors
             tile.SetTileColor(tileData.tileColor);
             tile.SetHighlightColor(tileData.highlightColor);

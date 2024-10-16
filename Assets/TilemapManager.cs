@@ -16,24 +16,7 @@ public class TilemapManager : MonoBehaviour
     {
         string filePath = Application.dataPath + "SavedData/grid.json";
 
-        if (File.Exists(filePath))
-        {
-            string json = File.ReadAllText(filePath);
-            GridData gridData = JsonUtility.FromJson<GridData>(json); // Deserialize
-
-            // Now you can loop through the gridData.tiles to recreate the grid
-            foreach (var tileData in gridData.tiles)
-            {
-                Debug.Log("Loaded tile at: " + tileData.x + ", " + tileData.y);
-                // Use the loaded data to recreate the grid, e.g., instantiate tiles again
-                gridManager.GenerateGrid();
-
-            }
-        }
-        else
-        {
-            Debug.LogError("File not found: " + filePath);
-        }
+        gridManager.LoadGridFromJson(filePath);
     }
 
     public void ClearGrid()
