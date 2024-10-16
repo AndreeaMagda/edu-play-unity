@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 
 public class GridManager : MonoBehaviour
-{
+    {
     public int width = 16;
     public int height = 9;
 
@@ -14,7 +14,7 @@ public class GridManager : MonoBehaviour
 
     private Dictionary<Vector2, Tile> tiles = new Dictionary<Vector2, Tile>();
 
-    void GenerateGrid() // Generate a grid of cubes
+   public void GenerateGrid() // Generate a grid of cubes
     {
         for (int x = 0; x < width; x++)
         {
@@ -111,5 +111,6 @@ public class GridManager : MonoBehaviour
     void Start()
     {
         GenerateGrid();
+       
     }
 }

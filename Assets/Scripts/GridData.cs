@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class GridData : MonoBehaviour
+public class GridData 
 {
     public List<TileData> tiles = new List<TileData>();
 }
@@ -15,4 +15,5 @@ public class TileData
     public int x;
     public int y;
     public string tileType;
+    //public Color color;
 }

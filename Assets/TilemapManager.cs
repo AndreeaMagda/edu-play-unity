@@ -26,6 +26,8 @@ public class TilemapManager : MonoBehaviour
             {
                 Debug.Log("Loaded tile at: " + tileData.x + ", " + tileData.y);
                 // Use the loaded data to recreate the grid, e.g., instantiate tiles again
+                gridManager.GenerateGrid();
+
             }
         }
         else
