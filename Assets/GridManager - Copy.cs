@@ -55,11 +55,14 @@ public class GridManager : MonoBehaviour
         GridData gridData = new GridData();
         foreach (var tileEntry in tiles)
         {
+            Tile tile = tileEntry.Value;
             TileData tileData = new TileData()
             {
                 x = (int)tileEntry.Key.x,
                 y = (int)tileEntry.Key.y,
-                tileType = tileEntry.Value.GetType().Name
+                tileType = tile.GetType().Name,
+                tileColor = tile.GetTileColor(),
+                highlightColor = tile.GetHighlightColor()
             };
             gridData.tiles.Add(tileData);
         }
@@ -91,6 +94,10 @@ public class GridManager : MonoBehaviour
             var isOffset = (tileData.x + tileData.y) % 2 == 1;
             tile.Init(isOffset);
 
+            //Set the colors
+            tile.SetTileColor(tileData.tileColor);
+            tile.SetHighlightColor(tileData.highlightColor);
+            Debug.Log("Colors loaded");
             tiles[position] = tile;
         }
 

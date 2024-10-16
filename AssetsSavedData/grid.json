@@ -3,232 +3,324 @@
         {
             "x": 0,
             "y": 0,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 0,
             "y": 1,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 0,
             "y": 2,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 0,
             "y": 3,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 0,
             "y": 4,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 0,
             "y": 5,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 0,
             "y": 6,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 0,
             "y": 7,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 0,
             "y": 8,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 1,
             "y": 0,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 1,
             "y": 8,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 2,
             "y": 0,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 2,
             "y": 8,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 3,
             "y": 0,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 3,
             "y": 8,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 4,
             "y": 0,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 4,
             "y": 8,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 5,
             "y": 0,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 5,
             "y": 8,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 6,
             "y": 0,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 6,
             "y": 8,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 7,
             "y": 0,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 7,
             "y": 8,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 8,
             "y": 0,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 8,
             "y": 8,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 9,
             "y": 0,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 9,
             "y": 8,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 10,
             "y": 0,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 10,
             "y": 8,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 11,
             "y": 0,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 11,
             "y": 8,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 12,
             "y": 0,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 12,
             "y": 8,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 13,
             "y": 0,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 13,
             "y": 8,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 14,
             "y": 0,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 14,
             "y": 8,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 15,
             "y": 0,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 15,
             "y": 1,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 15,
             "y": 2,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 15,
             "y": 3,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 15,
             "y": 4,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 15,
             "y": 5,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 15,
             "y": 6,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 15,
             "y": 7,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
+            "highlightColor": "373333BE"
         },
         {
             "x": 15,
             "y": 8,
-            "tileType": "Tile"
+            "tileType": "Tile",
+            "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
         }
     ]
 }

@@ -15,5 +15,6 @@ public class TileData
     public int x;
     public int y;
     public string tileType;
-    //public Color color;
+    public string tileColor;
+    public string highlightColor;
 }
