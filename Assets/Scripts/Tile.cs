@@ -49,7 +49,6 @@ public class Tile : MonoBehaviour
         if (highlight != null)
         {
             highlight.SetActive(true);
-            Debug.Log("Mouse Enter");
         }
         else
         {
@@ -66,6 +65,45 @@ public class Tile : MonoBehaviour
         else
         {
             Debug.LogWarning("Highlight GameObject is not assigned.");
+        }
+    }
+
+
+    public string GetTileColor()
+    {
+        return ColorUtility.ToHtmlStringRGBA(render.color);
+    }
+
+    public string GetHighlightColor()
+    {
+        if (highlight != null)
+        {
+            var highlightRenderer = highlight.GetComponent<SpriteRenderer>();
+            if (highlightRenderer != null)
+            {
+                return ColorUtility.ToHtmlStringRGBA(highlightRenderer.color);
+            }
+        }
+        return null;
+    }
+
+    public void SetTileColor(string color)
+    {
+        if (ColorUtility.TryParseHtmlString("#" + color, out Color parsedColor))
+        {
+            render.color = parsedColor;
+        }
+    }
+
+    public void SetHighlightColor(string color)
+    {
+        if (highlight != null)
+        {
+            var highlightRenderer = highlight.GetComponent<SpriteRenderer>();
+            if (highlightRenderer != null && ColorUtility.TryParseHtmlString("#" + color, out Color parsedColor))
+            {
+                highlightRenderer.color = parsedColor;
+            }
         }
     }
 }
