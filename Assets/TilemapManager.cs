@@ -15,7 +15,8 @@ public class TilemapManager : MonoBehaviour
     public void LoadMap()
     {
         string filePath = Application.dataPath + "SavedData/grid.json";
-
+        //clear the grid before loading
+        ClearGrid();
         gridManager.LoadGridFromJson(filePath);
     }
 

@@ -17,10 +17,12 @@ public class TileMapEditor : Editor
         {
             script.SaveMap();
         }
-
+        
         if (GUILayout.Button("Load Map"))
         {
+            
             script.LoadMap();
+            
         }
     }
 }

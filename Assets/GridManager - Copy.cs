@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 
 public class GridManager : MonoBehaviour
-    {
+{
     public int width = 16;
     public int height = 9;
 
@@ -13,9 +13,16 @@ public class GridManager : MonoBehaviour
     public Transform cam;
 
     private Dictionary<Vector2, Tile> tiles = new Dictionary<Vector2, Tile>();
+    private bool isGridLoadedFromJson = false; // Flag to track if grid is loaded from JSON
 
-   public void GenerateGrid() 
+    public void GenerateGrid()
     {
+        if (isGridLoadedFromJson)
+        {
+            Debug.Log("Grid is already loaded from JSON. Skipping GenerateGrid.");
+            return;
+        }
+
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -23,7 +30,6 @@ public class GridManager : MonoBehaviour
                 // To create only the edge of the grid
                 if (x == 0 || y == 0 || y == height - 1 || x == width - 1)
                 {
-                    
                     Tile tile = Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity);
                     tile.name = "Tile " + x + ", " + y;
 
@@ -81,6 +87,8 @@ public class GridManager : MonoBehaviour
             return;
         }
 
+        ClearTiles(); // Clear the grid before loading
+
         string json = File.ReadAllText(filePath);
         GridData gridData = JsonUtility.FromJson<GridData>(json);
 
@@ -93,23 +101,30 @@ public class GridManager : MonoBehaviour
             // Initialize the tile if necessary, based on the tileType
             var isOffset = (tileData.x + tileData.y) % 2 == 1;
             tile.Init(isOffset);
-         
-            //Set the colors
+
+            // Set the colors
             tile.SetTileColor(tileData.tileColor);
             tile.SetHighlightColor(tileData.highlightColor);
             Debug.Log("Colors loaded");
             tiles[position] = tile;
         }
 
+        isGridLoadedFromJson = true; // Set the flag to true after loading from JSON
         Debug.Log($"Grid loaded from {filePath}");
     }
-
 
     public void ClearTiles()
     {
         foreach (var tile in tiles.Values)
         {
-            Destroy(tile.gameObject);  // Destroy all tiles in the grid
+            if (Application.isPlaying)
+            {
+                Destroy(tile.gameObject);  // Destroy all tiles in play mode
+            }
+            else
+            {
+                DestroyImmediate(tile.gameObject);  // Destroy all tiles in edit mode
+            }
         }
         tiles.Clear();  // Clear the dictionary of tiles
     }
@@ -117,7 +132,6 @@ public class GridManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GenerateGrid();
-       
+         GenerateGrid();
     }
 }
