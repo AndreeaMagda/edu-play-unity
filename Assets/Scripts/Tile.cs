@@ -6,6 +6,7 @@ public class Tile : MonoBehaviour
 {
     public SpriteRenderer render;
     public GameObject highlight;
+    public GameObject highlightPlayer;
 
     string baseHex= "FFF7D1";
     Color baseColor;
@@ -16,6 +17,9 @@ public class Tile : MonoBehaviour
     string highlightHex = "373333";
     Color highlightColor;
    
+    private GridManager gridManager;
+    public Vector2 gridPosition;
+
     void Awake()
     {
         // Initialize colors in Awake method
@@ -69,6 +73,16 @@ public class Tile : MonoBehaviour
     }
 
 
+    private void OnMouseDown()
+    {
+        // Handle the tile click, pass the control to GridManager to handle the logic
+        if (gridManager != null)
+        {
+            gridManager.TileClicked(this);
+        }
+    }
+
+
     public string GetTileColor()
     {
         return ColorUtility.ToHtmlStringRGBA(render.color);
@@ -85,6 +99,31 @@ public class Tile : MonoBehaviour
             }
         }
         return null;
+    }
+
+    /* public string GetHighlightColorPlayer()
+     {
+         if (highlightPlayer != null)
+         {
+             var highlightRenderer = highlightPlayer.GetComponent<SpriteRenderer>();
+             if (highlightRenderer != null)
+             {
+                 return ColorUtility.ToHtmlStringRGBA(highlightRenderer.color);
+             }
+         }
+         return null;
+     }*/
+
+    public void HighlightTilePlayer(bool highlight)
+    {
+        if (highlightPlayer != null)
+        {
+            highlightPlayer.SetActive(highlight);
+        }
+        else
+        {
+            Debug.LogWarning("HighlightPlayer GameObject is not assigned.");
+        }
     }
 
     public void SetTileColor(string color)
@@ -104,6 +143,18 @@ public class Tile : MonoBehaviour
             {
                 highlightRenderer.color = parsedColor;
             }
+        }
+    }
+
+    public void ResetHighlight()
+    {
+        if (highlight != null)
+        {
+            highlight.SetActive(false);
+        }
+        if (highlightPlayer != null)
+        {
+            highlightPlayer.SetActive(false);
         }
     }
 }

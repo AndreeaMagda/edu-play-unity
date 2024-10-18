@@ -15,6 +15,9 @@ public class GridManager : MonoBehaviour
     private Dictionary<Vector2, Tile> tiles = new Dictionary<Vector2, Tile>();
     private bool isGridLoadedFromJson = false; // Flag to track if grid is loaded from JSON
 
+    // Piece selection
+    public MovementController characterController; // Reference to handle movement
+
     public void GenerateGrid()
     {
         if (isGridLoadedFromJson)
@@ -42,6 +45,41 @@ public class GridManager : MonoBehaviour
         }
 
         cam.transform.position = new Vector3((width / 2f) - 0.5f, (height / 2f) - 0.5f, -10); // Move the camera to the center of the grid
+    }
+
+    public void TileClicked(Tile tile)
+    {
+        // Assuming you have a method in CharacterController to handle tile clicks
+        characterController.HandleTileClicked(tile);
+    }
+
+    public Tile GetTilePosition(Vector2 position)
+    {
+        if (tiles.TryGetValue(position, out Tile tile))
+        {
+            return tile;
+        }
+        return null;
+    }
+
+    // Set this tile to be highlighted as a valid move
+    public void HighlightTile(Tile tile, Color color)
+    {
+        Renderer renderer = tile.GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            renderer.material.color = color;
+        }
+    }
+
+    // Reset the highlight when no longer selected or used
+    public void ResetHighlight(Tile tile, Color baseColor)
+    {
+        Renderer renderer = tile.GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            renderer.material.color = baseColor;  // Reset to the base color
+        }
     }
 
     public void SaveGridToJson(string filePath)
@@ -132,6 +170,6 @@ public class GridManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-/*        GenerateGrid();*/
+        /* GenerateGrid(); */
     }
 }
