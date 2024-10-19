@@ -509,9 +509,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e086f7b9c409f641a2738013b326b06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playButton: {fileID: 0}
-  rulesButton: {fileID: 0}
-  storyButton: {fileID: 0}
+  playButton: {fileID: 767975302}
+  rulesButton: {fileID: 1573413897}
+  storyButton: {fileID: 1617624240}
 --- !u!1 &452874233
 GameObject:
   m_ObjectHideFlags: 0
