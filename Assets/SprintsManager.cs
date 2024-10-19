@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SprintsManager : MonoBehaviour
@@ -36,7 +37,7 @@ public class SprintsManager : MonoBehaviour
         {
             int diceResult = RollDice();
             Debug.Log("Rezultatul zarului: " + diceResult);
-            MovePawn(diceResult); // Mută pionul în funcție de rezultatul zarului
+            StartCoroutine(MovePawn(diceResult)); // Mută pionul în funcție de rezultatul zarului
         }
     }
 
@@ -47,9 +48,8 @@ public class SprintsManager : MonoBehaviour
     }
 
     // Funcție pentru a muta pionul pe tabla de joc
-    void MovePawn(int diceResult)
+    IEnumerator MovePawn(int diceResult)
     {
-        // Calculează noua poziție bazată pe zar
         for (int i = 0; i < diceResult; i++)
         {
             currentTileIndex++; // Avansează la următoarea poziție
@@ -62,8 +62,26 @@ public class SprintsManager : MonoBehaviour
                 break;
             }
 
-            // Mută pionul la noua poziție
-            MovePawnToPosition(path[currentTileIndex]);
+            Vector2 startPosition = sprint.transform.position; // Poziția de start a pionului
+            Vector2 endPosition = path[currentTileIndex]; // Poziția finală
+
+            float journeyLength = Vector2.Distance(startPosition, endPosition); // Distanța totală
+            float startTime = Time.time; // Timpul de start
+
+            while (Vector2.Distance(sprint.transform.position, endPosition) > 0.01f)
+            {
+                // Calculăm cât timp a trecut
+                float distCovered = (Time.time - startTime) * 3f; // Viteza de mișcare
+                float fractionOfJourney = distCovered / journeyLength; // Proporția de parcurs
+
+                // Interpolăm între cele două poziții
+                sprint.transform.position = Vector2.Lerp(startPosition, endPosition, fractionOfJourney);
+
+                yield return null; // Așteptăm următorul frame
+            }
+
+            // Asigură-te că pionul ajunge exact la poziția finală
+            MovePawnToPosition(endPosition);
         }
     }
 
