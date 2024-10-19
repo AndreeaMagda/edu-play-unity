@@ -12,7 +12,7 @@ public class GridManager : MonoBehaviour
 
     public Transform cam;
 
-    private Dictionary<Vector2, Tile> tiles = new Dictionary<Vector2, Tile>();
+    public Dictionary<Vector2, Tile> tiles = new Dictionary<Vector2, Tile>();
     private bool isGridLoadedFromJson = false; // Flag to track if grid is loaded from JSON
 
     public void GenerateGrid()
