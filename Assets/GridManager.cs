@@ -133,6 +133,6 @@ public class GridManager : MonoBehaviour
     {
         //GenerateGrid();
         cam.transform.position = new Vector3((width / 2f) - 0.5f, (height / 2f) - 0.5f, -10); // Move the camera to the center of the grid
-
+        cam.transform.rotation = Quaternion.Euler(0, 0, -45); // Rotate the camera to look at the grid
     }
 }

@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        playerInstance.transform.rotation = Quaternion.Euler(0, 0, -45);
         PathGenerator pathGenerator = GetComponent<PathGenerator>();
         if (pathGenerator != null)
         {
