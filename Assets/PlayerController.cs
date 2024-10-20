@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        MovePawnToPosition(new Vector2(15, 8));
+        MovePawnToPosition(new Vector2(8, 8));
     }
 
     void Update()

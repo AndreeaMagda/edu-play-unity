@@ -5,7 +5,7 @@ using System.IO;
 
 public class GridManager : MonoBehaviour
 {
-    public int width = 16;
+    public int width = 9;
     public int height = 9;
 
     public Tile tilePrefab;
@@ -41,7 +41,6 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        cam.transform.position = new Vector3((width / 2f) - 0.5f, (height / 2f) - 0.5f, -10); // Move the camera to the center of the grid
     }
 
     public void SaveGridToJson(string filePath)
@@ -132,6 +131,8 @@ public class GridManager : MonoBehaviour
     
     void Start()
     {
-/*        GenerateGrid();*/
+        //GenerateGrid();
+        cam.transform.position = new Vector3((width / 2f) - 0.5f, (height / 2f) - 0.5f, -10); // Move the camera to the center of the grid
+
     }
 }

@@ -170,156 +170,58 @@
         },
         {
             "x": 8,
-            "y": 8,
-            "tileType": "Tile",
-            "tileColor": "FFF7D1FF",
-            "highlightColor": "373333BE"
-        },
-        {
-            "x": 9,
-            "y": 0,
-            "tileType": "Tile",
-            "tileColor": "FFD09BFF",
-            "highlightColor": "373333BE"
-        },
-        {
-            "x": 9,
-            "y": 8,
-            "tileType": "Tile",
-            "tileColor": "FFD09BFF",
-            "highlightColor": "373333BE"
-        },
-        {
-            "x": 10,
-            "y": 0,
-            "tileType": "Tile",
-            "tileColor": "FFF7D1FF",
-            "highlightColor": "373333BE"
-        },
-        {
-            "x": 10,
-            "y": 8,
-            "tileType": "Tile",
-            "tileColor": "FFF7D1FF",
-            "highlightColor": "373333BE"
-        },
-        {
-            "x": 11,
-            "y": 0,
-            "tileType": "Tile",
-            "tileColor": "FFD09BFF",
-            "highlightColor": "373333BE"
-        },
-        {
-            "x": 11,
-            "y": 8,
-            "tileType": "Tile",
-            "tileColor": "FFD09BFF",
-            "highlightColor": "373333BE"
-        },
-        {
-            "x": 12,
-            "y": 0,
-            "tileType": "Tile",
-            "tileColor": "FFF7D1FF",
-            "highlightColor": "373333BE"
-        },
-        {
-            "x": 12,
-            "y": 8,
-            "tileType": "Tile",
-            "tileColor": "FFF7D1FF",
-            "highlightColor": "373333BE"
-        },
-        {
-            "x": 13,
-            "y": 0,
-            "tileType": "Tile",
-            "tileColor": "FFD09BFF",
-            "highlightColor": "373333BE"
-        },
-        {
-            "x": 13,
-            "y": 8,
-            "tileType": "Tile",
-            "tileColor": "FFD09BFF",
-            "highlightColor": "373333BE"
-        },
-        {
-            "x": 14,
-            "y": 0,
-            "tileType": "Tile",
-            "tileColor": "FFF7D1FF",
-            "highlightColor": "373333BE"
-        },
-        {
-            "x": 14,
-            "y": 8,
-            "tileType": "Tile",
-            "tileColor": "FFF7D1FF",
-            "highlightColor": "373333BE"
-        },
-        {
-            "x": 15,
-            "y": 0,
-            "tileType": "Tile",
-            "tileColor": "FFD09BFF",
-            "highlightColor": "373333BE"
-        },
-        {
-            "x": 15,
             "y": 1,
             "tileType": "Tile",
-            "tileColor": "FFF7D1FF",
+            "tileColor": "FFD09BFF",
             "highlightColor": "373333BE"
         },
         {
-            "x": 15,
+            "x": 8,
             "y": 2,
             "tileType": "Tile",
-            "tileColor": "FFD09BFF",
+            "tileColor": "FFF7D1FF",
             "highlightColor": "373333BE"
         },
         {
-            "x": 15,
+            "x": 8,
             "y": 3,
             "tileType": "Tile",
-            "tileColor": "FFF7D1FF",
+            "tileColor": "FFD09BFF",
             "highlightColor": "373333BE"
         },
         {
-            "x": 15,
+            "x": 8,
             "y": 4,
             "tileType": "Tile",
-            "tileColor": "FFD09BFF",
+            "tileColor": "FFF7D1FF",
             "highlightColor": "373333BE"
         },
         {
-            "x": 15,
+            "x": 8,
             "y": 5,
             "tileType": "Tile",
-            "tileColor": "FFF7D1FF",
+            "tileColor": "FFD09BFF",
             "highlightColor": "373333BE"
         },
         {
-            "x": 15,
+            "x": 8,
             "y": 6,
             "tileType": "Tile",
-            "tileColor": "FFD09BFF",
-            "highlightColor": "373333BE"
-        },
-        {
-            "x": 15,
-            "y": 7,
-            "tileType": "Tile",
             "tileColor": "FFF7D1FF",
             "highlightColor": "373333BE"
         },
         {
-            "x": 15,
-            "y": 8,
+            "x": 8,
+            "y": 7,
             "tileType": "Tile",
             "tileColor": "FFD09BFF",
+            "highlightColor": "373333BE"
+        },
+        {
+            "x": 8,
+            "y": 8,
+            "tileType": "Tile",
+            "tileColor": "FFF7D1FF",
             "highlightColor": "373333BE"
         }
     ]
