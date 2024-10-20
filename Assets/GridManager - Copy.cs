@@ -27,16 +27,16 @@ public class GridManager : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                // To create only the edge of the grid
+               
                 if (x == 0 || y == 0 || y == height - 1 || x == width - 1)
                 {
                     Tile tile = Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity);
                     tile.name = "Tile " + x + ", " + y;
 
                     var isOffset = (x + y) % 2 == 1; // Check if the tile is offset
-                    tile.Init(isOffset); // Set the color of the tile
+                    tile.Init(isOffset);
 
-                    tiles[new Vector2(x, y)] = tile; // Add the tile to the dictionary
+                    tiles[new Vector2(x, y)] = tile; 
                 }
             }
         }
@@ -55,7 +55,7 @@ public class GridManager : MonoBehaviour
         if (!File.Exists(filePath))
         {
             // Create the file if it does not exist
-            File.WriteAllText(filePath, "{}"); // Example of creating an empty JSON file
+            File.WriteAllText(filePath, "{}"); 
         }
 
         GridData gridData = new GridData();
@@ -87,7 +87,7 @@ public class GridManager : MonoBehaviour
             return;
         }
 
-        ClearTiles(); // Clear the grid before loading
+        ClearTiles(); 
 
         string json = File.ReadAllText(filePath);
         GridData gridData = JsonUtility.FromJson<GridData>(json);
@@ -98,11 +98,11 @@ public class GridManager : MonoBehaviour
             Tile tile = Instantiate(tilePrefab, new Vector3(tileData.x, tileData.y, 0), Quaternion.identity);
             tile.name = $"Tile {tileData.x}, {tileData.y}";
 
-            // Initialize the tile if necessary, based on the tileType
+            
             var isOffset = (tileData.x + tileData.y) % 2 == 1;
             tile.Init(isOffset);
 
-            // Set the colors
+           
             tile.SetTileColor(tileData.tileColor);
             tile.SetHighlightColor(tileData.highlightColor);
             Debug.Log("Colors loaded");
@@ -119,17 +119,17 @@ public class GridManager : MonoBehaviour
         {
             if (Application.isPlaying)
             {
-                Destroy(tile.gameObject);  // Destroy all tiles in play mode
+                Destroy(tile.gameObject);  
             }
             else
             {
                 DestroyImmediate(tile.gameObject);  // Destroy all tiles in edit mode
             }
         }
-        tiles.Clear();  // Clear the dictionary of tiles
+        tiles.Clear();  
     }
 
-    // Start is called before the first frame update
+    
     void Start()
     {
 /*        GenerateGrid();*/
