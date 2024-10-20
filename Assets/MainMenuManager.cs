@@ -17,16 +17,16 @@ public class MainMenuManager : MonoBehaviour
 
     void PlayGame()
     {
-        SceneManager.LoadScene("SampleScene"); // Înlocuiește "GameScene" cu numele scenei tale de joc
+        SceneManager.LoadScene("SampleScene"); 
     }
 
     void ShowRules()
     {
-        SceneManager.LoadScene("RulesScene"); // Înlocuiește "RulesScene" cu numele scenei tale pentru reguli
+        SceneManager.LoadScene("RulesScene"); 
     }
 
     void ShowStory()
     {
-        SceneManager.LoadScene("StoryScene"); // Înlocuiește "StoryScene" cu numele scenei tale pentru poveste
+        SceneManager.LoadScene("StoryScene"); 
     }
 }
