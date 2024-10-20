@@ -17,7 +17,7 @@ public class MainMenuManager : MonoBehaviour
 
     void PlayGame()
     {
-        SceneManager.LoadScene("SampleScene"); 
+        SceneManager.LoadScene("GameScene"); 
     }
 
     void ShowRules()
