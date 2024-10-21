@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dad1e1ac8a058d44ac9a7faffe8e96e, type: 3}
   m_Name: New Dialogue Text
   m_EditorClassIdentifier: 
-  speakername: 
+  speakername: Stela
   paragraphs:
   - 

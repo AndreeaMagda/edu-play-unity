@@ -14,6 +14,9 @@ public class DialogueManager : MonoBehaviour
     private bool ConvoEnded, isTyping;
     private Coroutine typeRoutine;
 
+    private const string HTML_ALPHA = "<color=#00000000>";
+    private const float MAX_TYPE_SPEED = 0.1f;
+
     public void DisplayNextDialogue(DialogueText dialogue)
     {
         //if the queue is empty
@@ -33,10 +36,14 @@ public class DialogueManager : MonoBehaviour
         }
 
         //if there is something in queue
-        string paragraph = paragraphs.Dequeue();
+        if (!isTyping)
+        {
+            string paragraph = paragraphs.Dequeue();
 
-        //update the dialogue text
-        dialogueText.text = paragraph;
+            typeRoutine = StartCoroutine(TypeDialogueText(paragraph));
+        }
+        //this types the text all at once
+        //dialogueText.text = paragraph;
 
         if(paragraphs.Count == 0)
         {
@@ -68,5 +75,29 @@ public class DialogueManager : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+    }
+
+    private IEnumerator TypeDialogueText(string p)
+    {
+        isTyping = true;
+
+        dialogueText.text = "";
+
+        string original = p;
+        string displayed = "";
+        int alpha = 0;
+
+        foreach (char c in p.ToCharArray())
+        {
+            alpha++;
+            dialogueText.text = original;
+
+            displayed = dialogueText.text.Insert(alpha, HTML_ALPHA);
+            dialogueText.text = displayed;
+
+            yield return new WaitForSeconds(MAX_TYPE_SPEED / typingSpeed);
+        }
+
+        isTyping = false;
     }
 }

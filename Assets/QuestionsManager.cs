@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class QuestionsManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private DialogueText text;
+    [SerializeField] private DialogueManager manager;
 
-    // Update is called once per frame
-    void Update()
+    public void Talk(DialogueText text)
     {
-        
+        //start the conversation
+        manager.DisplayNextDialogue(text);
     }
 }
