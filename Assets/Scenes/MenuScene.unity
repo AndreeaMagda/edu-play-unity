@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 217673991}
   - component: {fileID: 217673993}
   - component: {fileID: 217673992}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 287592805}
   - component: {fileID: 287592807}
   - component: {fileID: 287592806}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 412784466}
   - component: {fileID: 412784465}
   - component: {fileID: 412784469}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -441,7 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -523,7 +523,7 @@ GameObject:
   - component: {fileID: 452874234}
   - component: {fileID: 452874236}
   - component: {fileID: 452874235}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -766,7 +766,7 @@ GameObject:
   - component: {fileID: 767975304}
   - component: {fileID: 767975303}
   - component: {fileID: 767975302}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: PlayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -967,7 +967,7 @@ GameObject:
   - component: {fileID: 1573413899}
   - component: {fileID: 1573413898}
   - component: {fileID: 1573413897}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: RulesButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1088,7 +1088,7 @@ GameObject:
   - component: {fileID: 1617624242}
   - component: {fileID: 1617624241}
   - component: {fileID: 1617624240}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: StoryButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
