@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // Pentru imagini UI
 
 public class PlayerController : MonoBehaviour
 {
     public GameObject playerInstance;
+    public Image diceImage; // Pentru a afișa imaginea zarului
+    public Sprite[] diceSprites; // Aici adăugăm sprite-urile cu zarurile
     private int currentTileIndex = 0;
     private List<Vector2> path;
 
@@ -36,7 +39,12 @@ public class PlayerController : MonoBehaviour
 
     int RollDice()
     {
-        return Random.Range(1, 7);
+        int diceResult = Random.Range(1, 7);
+
+    
+        diceImage.sprite = diceSprites[diceResult - 1]; 
+
+        return diceResult;
     }
 
     IEnumerator MovePawn(int diceResult)
