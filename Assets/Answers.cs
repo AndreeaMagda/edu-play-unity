@@ -16,6 +16,7 @@ public class Answers : MonoBehaviour
         }
         else
         {
+            //Wrong() function needed
             Debug.Log("Wrong Answer");
         }
     }
