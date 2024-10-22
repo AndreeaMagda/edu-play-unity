@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Answers : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public bool isCorrect = false;
 
-    // Update is called once per frame
-    void Update()
+    public void Answers()
     {
-        
+        if (isCorrect)
+        {
+            Debug.Log("Correct Answer");
+        }
+        else
+        {
+            Debug.Log("Wrong Answer");
+        }
     }
 }
