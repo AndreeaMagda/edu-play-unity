@@ -18,6 +18,10 @@ public class QuizManager : MonoBehaviour
 
     void SetAnswers()
     {
+        for (int i = 0; i< options.Length; i++)
+        {
+            options[i].transform.GetChild(0).GetComponent<Text>().text = QnA[currentQuestion].answers[i];
+        }
 
     }
 
