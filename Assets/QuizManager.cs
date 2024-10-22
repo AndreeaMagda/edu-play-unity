@@ -13,11 +13,18 @@ public class QuizManager : MonoBehaviour
 
     public void Start()
     {
+        GenerateQuestions();
+    }
+
+    void SetAnswers()
+    {
 
     }
 
     void GenerateQuestions()
     {
+        currentQuestion = Random.Range(0, QnA.questions.Count);
 
+        QuestionText.text = QnA.questions[currentQuestion].Intrebare;
     }
 }

@@ -14,7 +14,7 @@ public class Question
     public string RaspunsCorect;
 }
 
-public class QuestionAndAnwers: MonoBehaviour
+public class QuestionAndAnswers: MonoBehaviour
 {
     public string question;
     public string[] answers;
@@ -53,6 +53,7 @@ public class QuestionAndAnwers: MonoBehaviour
                 RaspunsCorect = values[5]
             };
             questions.Add(newQuestion);
+            question = newQuestion.Intrebare;
         }
         reader.Close();
     }
