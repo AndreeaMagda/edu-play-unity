@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // Pentru imagini UI
+using UnityEngine.UI; 
 
 public class PlayerController : MonoBehaviour
 {
     public GameObject playerInstance;
-    public Image diceImage; // Pentru a afișa imaginea zarului
-    public Sprite[] diceSprites; // Aici adăugăm sprite-urile cu zarurile
+    public Image diceImage; 
+    public Sprite[] diceSprites; 
     private int currentTileIndex = 0;
     private List<Vector2> path;
 
