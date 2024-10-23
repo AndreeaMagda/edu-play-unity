@@ -40,13 +40,17 @@ public class QuizManager : MonoBehaviour
         }
 
     }
-
     void GenerateQuestions()
     {
-        currentQuestion = Random.Range(0, QnA.questions.Count);
-
-        QuestionText.text = QnA.questions[currentQuestion].Intrebare;
-        SetAnswers();
-
+        if (QnA.questions.Count > 0)
+        {
+            currentQuestion = Random.Range(0, QnA.questions.Count);
+            QuestionText.text = QnA.questions[currentQuestion].Intrebare;
+            SetAnswers();
+        }
+        else
+        {
+            Debug.Log("No more questions available.");
+        }
     }
 }
