@@ -27,6 +27,6 @@ public class MainMenuManager : MonoBehaviour
 
     void ShowStory()
     {
-        SceneManager.LoadScene("StoryScene"); 
+        SceneManager.LoadScene("DialogueScene"); 
     }
 }

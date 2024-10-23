@@ -1723,6 +1723,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInstance: {fileID: 1613126820}
+  diceImage: {fileID: 0}
+  diceSprites: []
 --- !u!4 &344149026
 Transform:
   m_ObjectHideFlags: 0
