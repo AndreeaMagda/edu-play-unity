@@ -28,7 +28,27 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i < pawns.Length; i++)
         {
             currentTileIndices[i] = PlayerPrefs.GetInt("CurrentTileIndex_Player" + i, 0);
+
+
+            switch (i)
+            {
+                case 1:
+                    currentTileIndices[i] = PlayerPrefs.GetInt("CurrentTileIndex_Player1");
+                    break;
+                case 2:
+                    currentTileIndices[i] = PlayerPrefs.GetInt("CurrentTileIndex_Player2");
+                    break;
+                case 3:
+                    currentTileIndices[i] = PlayerPrefs.GetInt("CurrentTileIndex_Player3");
+                    break;
+                case 4:
+                    currentTileIndices[i] = PlayerPrefs.GetInt("CurrentTileIndex_Player4");
+                    break;
+                default:
+                    break;
+            }
         }
+
 
         PathGenerator pathGenerator = GetComponent<PathGenerator>();
         if (pathGenerator != null)
@@ -41,8 +61,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        gameStarted = PlayerPrefs.GetInt("GameStarted", 0) == 1;
-        currentTileIndex = PlayerPrefs.GetInt("CurrentTileIndex", 0);
+        gameStarted = PlayerPrefs.GetInt("GameStarted") == 1;
+        currentTileIndex = PlayerPrefs.GetInt("CurrentTileIndex");
         specialTileManager = GetComponent<SpecialTileManager>();
         if (specialTileManager == null)
         {
@@ -58,6 +78,22 @@ public class PlayerController : MonoBehaviour
         PlayerPrefs.SetInt("GameStarted", gameStarted ? 1 : 0);
         for (int i = 0; i < pawns.Length; i++)
         {
+            switch (i)
+            { case 1:
+                    PlayerPrefs.SetInt("CurrentTileIndex_Player1", currentTileIndices[1]);
+                    break;
+                case 2:
+                    PlayerPrefs.SetInt("CurrentTileIndex_Player2", currentTileIndices[2]);
+                    break;
+                case 3:
+                    PlayerPrefs.SetInt("CurrentTileIndex_Player3", currentTileIndices[3]);
+                    break;
+                case 4:
+                    PlayerPrefs.SetInt("CurrentTileIndex_Player4", currentTileIndices[4]);
+                    break;
+                default:
+                    break;
+            }
             PlayerPrefs.SetInt("CurrentTileIndex_Player" + i, currentTileIndices[i]);
         }
         if (Input.GetKeyDown(KeyCode.Space))
@@ -78,20 +114,19 @@ public class PlayerController : MonoBehaviour
         GameObject currentPawn = pawns[currentPlayerIndex]; // Pionul jucătorului curent
         int currentPawnTileIndex = currentTileIndices[currentPlayerIndex]; // Poziția pionului curent
 
-
         for (int i = 0; i < diceResult; i++)
         {
-            currentTileIndex++;
+            currentPawnTileIndex++; // Mut pionul la următoarea poziție
 
-            if (currentTileIndex >= path.Count)
+            if (currentPawnTileIndex >= path.Count) // Verific dacă pionul a ajuns la finalul traseului
             {
-                Debug.Log("You've reached the end of the path.");
-                currentTileIndex = path.Count - 1;
+                Debug.Log("Ai ajuns la finalul traseului.");
+                currentPawnTileIndex = path.Count - 1;
                 break;
             }
 
             Vector2 startPosition = currentPawn.transform.position;
-            Vector2 endPosition = path[currentTileIndex];
+            Vector2 endPosition = path[currentPawnTileIndex];
 
             float journeyLength = Vector2.Distance(startPosition, endPosition);
             float startTime = Time.time;
@@ -105,20 +140,19 @@ public class PlayerController : MonoBehaviour
                 yield return null;
             }
 
+            // Actualizează poziția pionului curent în array
             MovePawnToPosition(endPosition);
         }
 
-
-        // Actualizează poziția pionului curent în array
-        currentTileIndices[currentPlayerIndex] = currentPawnTileIndex;
-
+        currentTileIndices[currentPlayerIndex] = currentPawnTileIndex; // Actualizează array-ul cu poziția pionului curent
 
         // Verificăm dacă pionul a aterizat pe un tile special
-        StartCoroutine(specialTileManager.CheckForSpecialTile(path[currentTileIndex]));
+        StartCoroutine(specialTileManager.CheckForSpecialTile(path[currentTileIndices[currentPlayerIndex]]));
 
-        // După ce pionul se mișcă, trecem la următorul jucător
+        // După mutare, trecem la următorul jucător
         ChangeTurn();
     }
+
 
     public int RollDice()
     {
@@ -137,13 +171,14 @@ public class PlayerController : MonoBehaviour
 
     void ChangeTurn()
     {
-        currentPlayerIndex = (currentPlayerIndex + 1) % pawns.Length;
-        Debug.Log("It's now Player " + (currentPlayerIndex + 1) + "'s turn.");
+        currentPlayerIndex = (currentPlayerIndex + 1) % pawns.Length; // Treci la următorul jucător
+        Debug.Log("Este rândul jucătorului " + (currentPlayerIndex + 1));
     }
+
 
     public void ContinueFromCurrentPosition()
     {
-        MovePawnToPosition(path[currentTileIndex]);
+        MovePawnToPosition(path[currentTileIndices[currentPlayerIndex]]);
     }
     public void MovePawnForward(int steps)
     {
@@ -154,7 +189,7 @@ public class PlayerController : MonoBehaviour
         MovePawnToPosition(path[currentTileIndices[currentPlayerIndex]]);
     }
 
-    public void MovePawnBack(int steps)
+    public void MovePawnBack(int steps) 
     {
         currentTileIndices[currentPlayerIndex] -= steps;
         if (currentTileIndices[currentPlayerIndex] < 0)
