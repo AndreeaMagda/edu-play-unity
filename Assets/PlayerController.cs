@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
         PlayerPrefs.SetInt("CurrentTileIndex", currentTileIndex);
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            int diceResult = UnityEngine.Random.Range(1, 7);
+            int diceResult =RollDice();
             Debug.Log("Dice result: " + diceResult);
             StartCoroutine(MovePawn(diceResult));
         }
@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
 
     void OnApplicationQuit()
     {
+        PlayerPrefs.DeleteAll();
         PlayerPrefs.DeleteAll();
     }
 
@@ -92,6 +93,14 @@ public class PlayerController : MonoBehaviour
         }
 
         CheckForSpecialTile(path[currentTileIndex]); // Verifică dacă se află pe un tile special
+    }
+    int RollDice()
+    {
+        int diceResult = Random.Range(1, 7);
+
+        diceImage.sprite = diceSprites[diceResult - 1]; // Actualizează imaginea zarului
+
+        return diceResult;
     }
 
     void MovePawnToPosition(Vector2 newPosition)
