@@ -1,15 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
+using UnityEngine.SceneManagement; // Necesită pentru încărcarea scenei
 
 public class PlayerController : MonoBehaviour
 {
     public GameObject playerInstance;
-    public Image diceImage; 
-    public Sprite[] diceSprites; 
+    public Image diceImage;
+    public Sprite[] diceSprites;
     private int currentTileIndex = 0;
     private List<Vector2> path;
+
+    // Adaugă lista de tile-uri speciale
+    public Vector2[] specialTiles;  // Poți seta din Inspector pozițiile speciale
 
     void Start()
     {
@@ -24,7 +28,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        MovePawnToPosition(new Vector2(15, 8));
+        MovePawnToPosition(new Vector2(15, 8)); // Poziția de start
     }
 
     void Update()
@@ -41,8 +45,7 @@ public class PlayerController : MonoBehaviour
     {
         int diceResult = Random.Range(1, 7);
 
-    
-        diceImage.sprite = diceSprites[diceResult - 1]; 
+        diceImage.sprite = diceSprites[diceResult - 1]; // Actualizează imaginea zarului
 
         return diceResult;
     }
@@ -82,7 +85,18 @@ public class PlayerController : MonoBehaviour
 
     void MovePawnToPosition(Vector2 newPosition)
     {
-        playerInstance.transform.position = new Vector2(newPosition.x, newPosition.y);
+        playerInstance.transform.position = newPosition;
         Debug.Log("Pionul mutat la: " + newPosition);
+
+        // Verifică dacă pionul a ajuns pe un tile special
+        foreach (Vector2 tile in specialTiles)
+        {
+            if (newPosition == tile)
+            {
+                Debug.Log("Tile special atins! Încarcă scena de dialog.");
+                SceneManager.LoadScene("DialogueScene"); // Încarcă DialogueScene
+                return;
+            }
+        }
     }
 }
