@@ -69,7 +69,7 @@ public class QuizManager : MonoBehaviour
                     q.correctAnswer = 3;
                     break;
                 default:
-                    Debug.LogError("Răspuns invalid: " + correctAnswerLetter);
+                    Debug.Log("Răspuns invalid: " + correctAnswerLetter);
                     continue;  // Sari peste această întrebare dacă răspunsul este invalid
             }
 
