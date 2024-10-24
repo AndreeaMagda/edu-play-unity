@@ -9,6 +9,7 @@ public class QuizManager : MonoBehaviour
 {
     public TextMeshProUGUI questionText;  // TMP for question
     public Button[] answerButtons;        // Buttons for answer options
+    public TextMeshProUGUI feedbackText;
 
     private List<Question> questions = new List<Question>();  // List of questions
     private Question currentQuestion;
@@ -16,8 +17,12 @@ public class QuizManager : MonoBehaviour
 
     void Start()
     {
-        LoadQuestionsFromCSV("intrebari_romana");  // Ensure you have a CSV file named "intrebari_romana"
-        ShowNextQuestion();  // Show the first question
+        LoadQuestionsFromCSV("intrebari_romana");  
+        ShowNextQuestion();
+        if (feedbackText == null)
+        {
+            Debug.LogError("FeedbackText nu este setat în Inspector!");
+        }
     }
 
     public class Question
@@ -74,6 +79,34 @@ public class QuizManager : MonoBehaviour
         Debug.Log("Questions loaded: " + questions.Count);
     }
 
+
+    
+    public void CheckAnswer(bool isCorrect)
+    {
+        Debug.Log("CheckAnswer apelată cu valoarea: " + isCorrect);
+        if (isCorrect)
+        {
+            feedbackText.text = "Corect!";
+            feedbackText.color = Color.green;
+            Debug.Log("Feedback text setat la 'Corect!'");
+        }
+        else
+        {
+            feedbackText.text = "Greșit!";
+            feedbackText.color = Color.red; 
+            Debug.Log("Feedback text setat la 'Greșit!'");
+        }
+
+        StartCoroutine(ClearFeedbackAfterDelay(5.0f)); 
+    }
+
+    private IEnumerator ClearFeedbackAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        feedbackText.text = "";
+        ShowNextQuestion();
+    }
+
     void ShowNextQuestion()
     {
         if (questions.Count > 0)
@@ -101,14 +134,23 @@ public class QuizManager : MonoBehaviour
 
     void OnAnswerSelected(int answerIndex)
     {
+        bool isCorrect = (answerIndex == currentQuestion.correctAnswer);
+        CheckAnswer(isCorrect);
         if (answerIndex == currentQuestion.correctAnswer)
         {
+            feedbackText.text = "Corect!";
+            feedbackText.color = Color.green;
             Debug.Log("Correct answer!");
+            
         }
         else
         {
             Debug.Log("Wrong answer.");
+            feedbackText.text = "Greșit!";
+            feedbackText.color = Color.red;
+           
         }
+        StartCoroutine(ClearFeedbackAfterDelay(5.0f));
 
         questionsToAnswer--;
         if (questionsToAnswer > 0)
@@ -126,7 +168,7 @@ public class QuizManager : MonoBehaviour
     {
         // Cod pentru a închide DialogueScene
         SceneManager.UnloadSceneAsync("DialogueScene");
-
+        
         // Apelăm funcția din PlayerController pentru a continua de la poziția curentă
         PlayerController playerController = FindObjectOfType<PlayerController>();
         if (playerController != null)

@@ -13009,7 +13009,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -19909,7 +19909,7 @@ Transform:
   m_GameObject: {fileID: 1440522787}
   serializedVersion: 2
   m_LocalRotation: {x: 0.007680451, y: -0.0073809237, z: 0.7209852, w: 0.6928686}
-  m_LocalPosition: {x: -15.752934, y: 5.02238, z: -0.010283127}
+  m_LocalPosition: {x: -15.69, y: 5.02238, z: -0.010283127}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
