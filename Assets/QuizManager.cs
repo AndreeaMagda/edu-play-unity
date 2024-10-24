@@ -34,6 +34,7 @@ public class QuizManager : MonoBehaviour
         public string question;
         public string[] answers;
         public int correctAnswer;
+
     }
 
     void LoadQuestionsFromCSV(string fileName)
@@ -45,7 +46,6 @@ public class QuizManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("CSV content: " + csvFile.text);
         string[] lines = csvFile.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
 
         foreach (string line in lines)
@@ -74,7 +74,7 @@ public class QuizManager : MonoBehaviour
                     break;
                 default:
                     Debug.Log("Răspuns invalid: " + correctAnswerLetter);
-                    continue;  // Sari peste această întrebare dacă răspunsul este invalid
+                    continue;
             }
 
             questions.Add(q);
@@ -82,6 +82,7 @@ public class QuizManager : MonoBehaviour
 
         Debug.Log("Questions loaded: " + questions.Count);
     }
+
 
 
 
@@ -127,13 +128,24 @@ public class QuizManager : MonoBehaviour
     {
         quizComplete = false;  // Resetăm starea la fiecare întrebare nouă
 
+        Debug.Log("Number of questions remaining: " + questions.Count);
+
         if (questions.Count > 0)
         {
             int randomIndex = Random.Range(0, questions.Count);
             currentQuestion = questions[randomIndex];
             questions.RemoveAt(randomIndex);
 
-            questionText.text = currentQuestion.question;
+            Debug.Log("Setting question: " + currentQuestion.question);
+
+            if (questionText != null)
+            {
+                questionText.text = currentQuestion.question;
+            }
+            else
+            {
+                Debug.LogError("questionText is not assigned in the Inspector!");
+            }
 
             for (int i = 0; i < answerButtons.Length; i++)
             {
@@ -149,6 +161,7 @@ public class QuizManager : MonoBehaviour
             EndQuiz();
         }
     }
+
 
 
     void OnAnswerSelected(int answerIndex)
