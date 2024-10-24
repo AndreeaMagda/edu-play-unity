@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public Sprite[] diceSprites;
     private int currentTileIndex = 0;
     private List<Vector2> path;
+    private bool gameStarted=false;
+
 
     // Special tile lists
     public Vector2[] chanceTiles;  // "Sansa" challenges
@@ -35,20 +37,27 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        // Initializați currentTileIndex cu poziția de start
-        currentTileIndex = path.FindIndex(tile => tile == new Vector2(15, 8));
-        if (currentTileIndex == -1) currentTileIndex = 0; // Default to first tile if starting position is not found
-        MovePawnToPosition(path[currentTileIndex]); // Mută pionul la poziția de start
+        gameStarted = PlayerPrefs.GetInt("GameStarted", 0) == 1;
+        currentTileIndex = PlayerPrefs.GetInt("CurrentTileIndex", 0);
+
+        ContinueFromCurrentPosition(); // Mută pionul la poziția de start
     }
 
     void Update()
     {
+        PlayerPrefs.SetInt("GameStarted", gameStarted ? 1 : 0);
+        PlayerPrefs.SetInt("CurrentTileIndex", currentTileIndex);
         if (Input.GetKeyDown(KeyCode.Space))
         {
             int diceResult = UnityEngine.Random.Range(1, 7);
             Debug.Log("Dice result: " + diceResult);
             StartCoroutine(MovePawn(diceResult));
         }
+    }
+
+    void OnApplicationQuit()
+    {
+        PlayerPrefs.DeleteAll();
     }
 
     IEnumerator MovePawn(int diceResult)
@@ -88,6 +97,7 @@ public class PlayerController : MonoBehaviour
     void MovePawnToPosition(Vector2 newPosition)
     {
         playerInstance.transform.position = newPosition;
+
         Debug.Log("Pawn moved to: " + newPosition);
     }
 
