@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System;
+using UnityEngine.SceneManagement;
 
 public class QuizManager : MonoBehaviour
 {
-    public TextMeshProUGUI questionText;  // TMP pentru întrebare
-    public Button[] answerButtons;          // Butoanele pentru variantele de răspuns
+    public TextMeshProUGUI questionText;  // TMP for question
+    public Button[] answerButtons;        // Buttons for answer options
 
-    private List<Question> questions = new List<Question>();  // Lista de întrebări
+    private List<Question> questions = new List<Question>();  // List of questions
     private Question currentQuestion;
+    private int questionsToAnswer = 1;    // Number of questions to answer based on challenge
 
     void Start()
     {
-        LoadQuestionsFromCSV("intrebari_romana"); // Asigură-te că numele fișierului este corect
-        ShowNextQuestion();
+        LoadQuestionsFromCSV("intrebari_romana");  // Ensure you have a CSV file named "intrebari_romana"
+        ShowNextQuestion();  // Show the first question
     }
 
-    // Structură pentru o întrebare
     public class Question
     {
         public string question;
@@ -27,33 +27,28 @@ public class QuizManager : MonoBehaviour
         public int correctAnswer;
     }
 
-    // Funcție pentru încărcarea întrebărilor din CSV
     void LoadQuestionsFromCSV(string fileName)
     {
-        // Încărcați fișierul CSV din Resources
         TextAsset csvFile = Resources.Load<TextAsset>(fileName);
         if (csvFile == null)
         {
-            Debug.LogError("Fișierul CSV nu a fost găsit: " + fileName);
+            Debug.LogError("CSV file not found: " + fileName);
             return;
         }
 
-        Debug.Log("Conținut CSV: " + csvFile.text);
-
-        // Sparge conținutul pe linii
-        string[] lines = csvFile.text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        Debug.Log("CSV content: " + csvFile.text);
+        string[] lines = csvFile.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
 
         foreach (string line in lines)
         {
             string[] values = line.Split(',');
-            if (values.Length < 6) continue;  // Saltă rândurile incomplete
+            if (values.Length < 6) continue;
 
             Question q = new Question();
             q.question = values[0];
             q.answers = new string[] { values[1], values[2], values[3], values[4] };
 
-            // Convertim literele A, B, C, D la valori numerice
-            string correctAnswerLetter = values[5].Trim().ToUpper();  // Asigură-te că este uppercase și fără spații
+            string correctAnswerLetter = values[5].Trim().ToUpper();
             switch (correctAnswerLetter)
             {
                 case "A":
@@ -76,65 +71,82 @@ public class QuizManager : MonoBehaviour
             questions.Add(q);
         }
 
-        Debug.Log("Întrebări încărcate: " + questions.Count);
+        Debug.Log("Questions loaded: " + questions.Count);
     }
 
-
-    // Funcție pentru afișarea unei întrebări noi
     void ShowNextQuestion()
     {
         if (questions.Count > 0)
         {
-            // Alege un index aleatoriu
-            int randomIndex = UnityEngine.Random.Range(0, questions.Count);
-            currentQuestion = questions[randomIndex];  // Ia întreba aleatoare
+            int randomIndex = Random.Range(0, questions.Count);
+            currentQuestion = questions[randomIndex];
+            questions.RemoveAt(randomIndex);
 
-            // Debug pentru a vedea dacă întrebarea este setată corect
-            Debug.Log("Întrebare afișată: " + currentQuestion.question);
-            questionText.text = currentQuestion.question;  // Setează întrebarea în UI
+            questionText.text = currentQuestion.question;
 
-            // Verifică răspunsurile și asigură-te că sunt afișate corect
             for (int i = 0; i < answerButtons.Length; i++)
             {
                 answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion.answers[i];
-                Debug.Log("Răspuns buton " + i + ": " + currentQuestion.answers[i]);
-
-                // Atribuie click listener pentru fiecare buton
-                int answerIndex = i; // Capturare corectă a indexului
                 answerButtons[i].onClick.RemoveAllListeners();
-                answerButtons[i].onClick.AddListener(() => CheckAnswer(answerIndex));
+                int answerIndex = i;
+                answerButtons[i].onClick.AddListener(() => OnAnswerSelected(answerIndex));
             }
-
-            // Scoate întrebarea curentă din listă pentru a evita repetarea
-            questions.RemoveAt(randomIndex);
         }
         else
         {
-            Debug.Log("Nu există întrebări de afișat.");
+            Debug.Log("No more questions available.");
+            EndQuiz();
         }
     }
 
-
-
-    // Funcție pentru verificarea răspunsului
-    void CheckAnswer(int index)
+    void OnAnswerSelected(int answerIndex)
     {
-        if (index == currentQuestion.correctAnswer)
+        if (answerIndex == currentQuestion.correctAnswer)
         {
-            Debug.Log("Răspuns corect!");
+            Debug.Log("Correct answer!");
         }
         else
         {
-            Debug.Log("Răspuns greșit!");
+            Debug.Log("Wrong answer.");
         }
 
-        // Afișează întrebarea următoare
-        ShowNextQuestion();
+        questionsToAnswer--;
+        if (questionsToAnswer > 0)
+        {
+            ShowNextQuestion();
+        }
+        else
+        {
+            EndQuiz();
+        }
     }
 
-    public void OnAnswerButtonClicked(int answerIndex)
+    // În DialogueScene.cs
+    public void OnDialogueComplete()
     {
-        CheckAnswer(answerIndex);
+        // Cod pentru a închide DialogueScene
+        SceneManager.UnloadSceneAsync("DialogueScene");
+
+        // Apelăm funcția din PlayerController pentru a continua de la poziția curentă
+        PlayerController playerController = FindObjectOfType<PlayerController>();
+        if (playerController != null)
+        {
+            playerController.ContinueFromCurrentPosition();
+        }
+        else
+        {
+            Debug.LogError("PlayerController not found in the scene.");
+        }
     }
 
+
+    void EndQuiz()
+    {
+        Debug.Log("Challenge completed. Returning to game.");
+
+        // Unload dialogue scene and return to main scene
+        SceneManager.UnloadSceneAsync("DialogueScene");  // Unload the dialogue scene
+        // Load the main game scene if necessary
+        SceneManager.LoadScene("GameScene");  // Load your game scene
+    }
 }
