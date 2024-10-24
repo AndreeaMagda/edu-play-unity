@@ -110,18 +110,56 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Pawn moved to: " + newPosition);
     }
 
+
+    private IEnumerator HandleMultipleQuestions(int numberOfQuestions)
+    {
+        for (int i = 0; i < numberOfQuestions; i++)
+        {
+            Debug.Log("Loading DialogueScene for question " + (i + 1) + "/" + numberOfQuestions);
+            SceneManager.LoadScene("DialogueScene");  // Încarcă scena pentru întrebare
+
+            // Așteaptă până când quiz-ul se termină (implementat în `QuizManager`)
+            yield return new WaitUntil(() => FindObjectOfType<QuizManager>().IsQuizComplete());
+
+            // Verifică dacă răspunsul a fost corect sau greșit
+            if (FindObjectOfType<QuizManager>().WasAnswerCorrect())
+            {
+                Debug.Log("Răspuns corect la întrebarea " + (i + 1));
+            }
+            else
+            {
+                Debug.Log("Răspuns greșit la întrebarea " + (i + 1) + ". Penalitate aplicată.");
+                // Aici poți adăuga penalitățile (de exemplu, sări o tură)
+                break;  // Ieși din buclă dacă răspunsul este greșit, dacă este cazul
+            }
+
+            // Adaugă un mic delay între întrebări pentru a lăsa feedback-ul să fie vizibil
+            yield return new WaitForSeconds(2.0f);  // Așteaptă 2 secunde înainte de următoarea întrebare
+        }
+
+        Debug.Log(numberOfQuestions + " întrebări completate.");
+        // La final, poți reveni la jocul principal
+    }
+
+
+
+
     void CheckForSpecialTile(Vector2 position)
     {
+        // Provocările "Sansa"
+        Vector2[] chanceTiles = { new Vector2(15, 2), new Vector2(13, 0), new Vector2(10, 0), new Vector2(0, 7), new Vector2(0, 1), new Vector2(3, 8), new Vector2(9, 8), new Vector2(14, 8) };
         foreach (Vector2 tile in chanceTiles)
         {
             if (position == tile)
             {
-                Debug.Log("Chance challenge! Loading question.");
+                Debug.Log("Chance challenge! Loading one random question.");
                 SceneManager.LoadScene("DialogueScene");
                 return;
             }
         }
 
+        // Provocările "Capcana"
+        Vector2[] trapTiles = { new Vector2(15, 3), new Vector2(5, 0), new Vector2(0, 4), new Vector2(7, 8) };
         foreach (Vector2 tile in trapTiles)
         {
             if (position == tile)
@@ -134,62 +172,97 @@ public class PlayerController : MonoBehaviour
                         SceneManager.LoadScene("DialogueScene");
                         break;
                     case 1:
-                        Debug.Log("Trap: Roll the dice and need to get between 3 and 8 to continue.");
+                        Debug.Log("Trap: Roll the dice, need between 3 and 8 to continue.");
+                        int diceResult = RollDice();
+                        if (diceResult >= 3 && diceResult <= 8)
+                        {
+                            Debug.Log("Correct roll, player can continue.");
+                        }
+                        else
+                        {
+                            Debug.Log("Incorrect roll, player stays.");
+                        }
                         break;
                     case 2:
                         Debug.Log("Trap: Skip a turn.");
+                        // Implement logic to skip a turn
                         break;
                 }
                 return;
             }
         }
 
-        // Verifică alte tile-uri speciale
-        if (position == stoneTile)
+        // Provocarea "Pietre" (3 întrebări)
+        if (position == new Vector2(15, 5))
         {
             Debug.Log("Stone challenge! 3 questions in a row.");
-            SceneManager.LoadScene("DialogueScene");
+            StartCoroutine(HandleMultipleQuestions(3));  // Afișează 3 întrebări pe rând
             return;
         }
 
-        if (position == swampTile)
+        // Provocarea "Mlastina" (3 întrebări, răspuns greșit = o tură pierdută)
+        if (position == new Vector2(15, 0))
         {
             Debug.Log("Swamp challenge! 3 questions with penalty.");
-            SceneManager.LoadScene("DialogueScene");
+            StartCoroutine(HandleMultipleQuestionsWithPenalty(3));
             return;
         }
 
-        if (position == moonTile)
+        // Provocarea "Moon" (pierzi o tură)
+        if (position == new Vector2(0, 6))
         {
             Debug.Log("Moon challenge! Skip a turn.");
-            return; // Implement logic to skip a turn
-        }
-
-        if (position == ladderTile)
-        {
-            Debug.Log("Ladder challenge! 2 questions.");
-            SceneManager.LoadScene("DialogueScene");
+            // Implement skip turn logic here
             return;
         }
 
-        if (position == mapTile)
+        // Provocarea "Scara" (2 întrebări)
+        if (position == new Vector2(13, 8))
         {
-            Debug.Log("Map challenge! Move back by the number indicated by the dice.");
-            int diceResult = UnityEngine.Random.Range(1, 7);
+            Debug.Log("Ladder challenge! 2 questions.");
+            StartCoroutine(HandleMultipleQuestions(2));  // Afișează 2 întrebări pe rând
+            return;
+        }
+
+        // Provocarea "Map" (aruncă zarul și te întorci)
+        if (position == new Vector2(2, 0))
+        {
+            Debug.Log("Map challenge! Roll the dice and move back by that number.");
+            int diceResult = RollDice();
             currentTileIndex -= diceResult;
             if (currentTileIndex < 0) currentTileIndex = 0;
             MovePawnToPosition(path[currentTileIndex]);
             return;
         }
 
-        if (position == wingsTile)
+        // Provocarea "Wings" (avansezi 3 tile-uri)
+        if (position == new Vector2(5, 8))
         {
             Debug.Log("Wings challenge! The pawn advances 3 positions.");
             currentTileIndex += 3;
             if (currentTileIndex >= path.Count) currentTileIndex = path.Count - 1;
             MovePawnToPosition(path[currentTileIndex]);
+            return;
         }
     }
+
+
+    private IEnumerator HandleMultipleQuestionsWithPenalty(int numberOfQuestions)
+    {
+        for (int i = 0; i < numberOfQuestions; i++)
+        {
+            SceneManager.LoadScene("DialogueScene");
+            yield return new WaitUntil(() => FindObjectOfType<QuizManager>().IsQuizComplete()); // Așteaptă finalizarea întrebării
+
+            if (!FindObjectOfType<QuizManager>().WasAnswerCorrect()) // Verifică dacă răspunsul a fost greșit
+            {
+                Debug.Log("Wrong answer! Penalty applied (skip turn or other penalty).");
+                // Aplică penalitatea - de exemplu, sări o tură
+                break;
+            }
+        }
+    }
+
 
     // Adaugă această metodă pentru a salva indexul curent al tile-ului în timpul interacțiunii cu DialogueScene
     public void ContinueFromCurrentPosition()

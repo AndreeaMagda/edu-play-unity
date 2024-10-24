@@ -15,6 +15,10 @@ public class QuizManager : MonoBehaviour
     private Question currentQuestion;
     private int questionsToAnswer = 1;    // Number of questions to answer based on challenge
 
+    private bool quizComplete = false;
+    private bool lastAnswerCorrect = false;
+
+
     void Start()
     {
         LoadQuestionsFromCSV("intrebari_romana");  
@@ -80,10 +84,12 @@ public class QuizManager : MonoBehaviour
     }
 
 
-    
+
     public void CheckAnswer(bool isCorrect)
     {
-        Debug.Log("CheckAnswer apelată cu valoarea: " + isCorrect);
+        lastAnswerCorrect = isCorrect;
+        quizComplete = true;
+
         if (isCorrect)
         {
             feedbackText.text = "Corect!";
@@ -93,22 +99,34 @@ public class QuizManager : MonoBehaviour
         else
         {
             feedbackText.text = "Greșit!";
-            feedbackText.color = Color.red; 
+            feedbackText.color = Color.red;
             Debug.Log("Feedback text setat la 'Greșit!'");
         }
 
-        StartCoroutine(ClearFeedbackAfterDelay(5.0f)); 
+     
+        StartCoroutine(ClearFeedbackAfterDelay(5.0f));
     }
+    public bool IsQuizComplete()
+    {
+        return quizComplete;
+    }
+
+    public bool WasAnswerCorrect()
+    {
+        return lastAnswerCorrect;
+    }
+
 
     private IEnumerator ClearFeedbackAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        feedbackText.text = "";
-        ShowNextQuestion();
+        feedbackText.text = "";  // Golește textul feedback-ului
     }
 
     void ShowNextQuestion()
     {
+        quizComplete = false;  // Resetăm starea la fiecare întrebare nouă
+
         if (questions.Count > 0)
         {
             int randomIndex = Random.Range(0, questions.Count);
@@ -132,6 +150,7 @@ public class QuizManager : MonoBehaviour
         }
     }
 
+
     void OnAnswerSelected(int answerIndex)
     {
         bool isCorrect = (answerIndex == currentQuestion.correctAnswer);
@@ -150,7 +169,8 @@ public class QuizManager : MonoBehaviour
             feedbackText.color = Color.red;
            
         }
-        StartCoroutine(ClearFeedbackAfterDelay(5.0f));
+      //  StartCoroutine(ClearFeedbackAfterDelay(5.0f));
+        ShowNextQuestion();
 
         questionsToAnswer--;
         if (questionsToAnswer > 0)
