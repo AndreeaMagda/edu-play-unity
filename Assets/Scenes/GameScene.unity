@@ -5339,6 +5339,7 @@ GameObject:
   - component: {fileID: 344149026}
   - component: {fileID: 344149025}
   - component: {fileID: 344149027}
+  - component: {fileID: 344149028}
   m_Layer: 0
   m_Name: peon
   m_TagString: Untagged
@@ -5358,7 +5359,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77b956ac28bc8ae47a1d29b6ea0822ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInstance: {fileID: 1613126820}
+  pawns:
+  - {fileID: 1613126820}
   diceImage: {fileID: 1497448652}
   diceSprites:
   - {fileID: 21300000, guid: 5180f7b11f7a2c743be6ac612aa649a7, type: 3}
@@ -5367,26 +5369,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 19584b3303789d14cbb73624f7040539, type: 3}
   - {fileID: 21300000, guid: fd42afbdb7ca3d14f9da6af29d109d87, type: 3}
   - {fileID: 21300000, guid: 2a3a4c74f8a3b4947a906f497c3ed8d1, type: 3}
-  chanceTiles:
-  - {x: 15, y: 2}
-  - {x: 13, y: 0}
-  - {x: 10, y: 0}
-  - {x: 0, y: 7}
-  - {x: 3, y: 8}
-  - {x: 0, y: 1}
-  - {x: 9, y: 8}
-  - {x: 14, y: 8}
-  trapTiles:
-  - {x: 5, y: 0}
-  - {x: 15, y: 3}
-  - {x: 0, y: 4}
-  - {x: 7, y: 8}
-  stoneTile: {x: 15, y: 5}
-  swampTile: {x: 15, y: 0}
-  moonTile: {x: 0, y: 6}
-  ladderTile: {x: 13, y: 8}
-  mapTile: {x: 2, y: 0}
-  wingsTile: {x: 5, y: 8}
 --- !u!4 &344149026
 Transform:
   m_ObjectHideFlags: 0
@@ -5415,6 +5397,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 394ffc10acedace4a9f1cfa67591b70d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &344149028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344149024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ca75c151385a23419a5a60101c2bf31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chanceTiles:
+  - {x: 15, y: 2}
+  - {x: 13, y: 0}
+  - {x: 10, y: 0}
+  - {x: 0, y: 7}
+  - {x: 3, y: 8}
+  - {x: 0, y: 1}
+  - {x: 9, y: 8}
+  - {x: 14, y: 8}
+  trapTiles:
+  - {x: 5, y: 0}
+  - {x: 15, y: 3}
+  - {x: 0, y: 4}
+  - {x: 7, y: 8}
+  stoneTile: {x: 15, y: 5}
+  swampTile: {x: 15, y: 0}
+  moonTile: {x: 0, y: 6}
+  ladderTile: {x: 13, y: 8}
+  mapTile: {x: 2, y: 0}
+  wingsTile: {x: 5, y: 8}
 --- !u!1 &360689186
 GameObject:
   m_ObjectHideFlags: 0
