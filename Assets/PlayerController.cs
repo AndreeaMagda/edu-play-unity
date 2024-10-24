@@ -14,11 +14,22 @@ public class PlayerController : MonoBehaviour
     private List<Vector2> path;
     private bool gameStarted = false;
 
+    private int[] currentTileIndices;
+
     // Referință către SpecialTileManager
     private SpecialTileManager specialTileManager;
 
     void Start()
     {
+        // Initializează array-ul de poziții pentru fiecare jucător
+        currentTileIndices = new int[pawns.Length];
+
+        // Încarcă pozițiile pionilor din PlayerPrefs
+        for (int i = 0; i < pawns.Length; i++)
+        {
+            currentTileIndices[i] = PlayerPrefs.GetInt("CurrentTileIndex_Player" + i, 0);
+        }
+
         PathGenerator pathGenerator = GetComponent<PathGenerator>();
         if (pathGenerator != null)
         {
@@ -45,7 +56,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         PlayerPrefs.SetInt("GameStarted", gameStarted ? 1 : 0);
-        PlayerPrefs.SetInt("CurrentTileIndex", currentTileIndex);
+        for (int i = 0; i < pawns.Length; i++)
+        {
+            PlayerPrefs.SetInt("CurrentTileIndex_Player" + i, currentTileIndices[i]);
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             int diceResult = RollDice();
@@ -62,6 +76,8 @@ public class PlayerController : MonoBehaviour
     IEnumerator MovePawn(int diceResult)
     {
         GameObject currentPawn = pawns[currentPlayerIndex]; // Pionul jucătorului curent
+        int currentPawnTileIndex = currentTileIndices[currentPlayerIndex]; // Poziția pionului curent
+
 
         for (int i = 0; i < diceResult; i++)
         {
@@ -91,6 +107,11 @@ public class PlayerController : MonoBehaviour
 
             MovePawnToPosition(endPosition);
         }
+
+
+        // Actualizează poziția pionului curent în array
+        currentTileIndices[currentPlayerIndex] = currentPawnTileIndex;
+
 
         // Verificăm dacă pionul a aterizat pe un tile special
         StartCoroutine(specialTileManager.CheckForSpecialTile(path[currentTileIndex]));
@@ -124,20 +145,24 @@ public class PlayerController : MonoBehaviour
     {
         MovePawnToPosition(path[currentTileIndex]);
     }
-
     public void MovePawnForward(int steps)
     {
-        currentTileIndex += steps;
-        if (currentTileIndex >= path.Count) currentTileIndex = path.Count - 1;
-        MovePawnToPosition(path[currentTileIndex]);
+        currentTileIndices[currentPlayerIndex] += steps;
+        if (currentTileIndices[currentPlayerIndex] >= path.Count)
+            currentTileIndices[currentPlayerIndex] = path.Count - 1;
+
+        MovePawnToPosition(path[currentTileIndices[currentPlayerIndex]]);
     }
 
     public void MovePawnBack(int steps)
     {
-        currentTileIndex -= steps;
-        if (currentTileIndex < 0) currentTileIndex = 0;
-        MovePawnToPosition(path[currentTileIndex]);
+        currentTileIndices[currentPlayerIndex] -= steps;
+        if (currentTileIndices[currentPlayerIndex] < 0)
+            currentTileIndices[currentPlayerIndex] = 0;
+
+        MovePawnToPosition(path[currentTileIndices[currentPlayerIndex]]);
     }
+
 
     public IEnumerator HandleMultipleQuestions(int numQuestions)
     {
