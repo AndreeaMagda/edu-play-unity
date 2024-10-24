@@ -47,14 +47,20 @@ public class PlayerController : MonoBehaviour
     {
         PlayerPrefs.SetInt("GameStarted", gameStarted ? 1 : 0);
         PlayerPrefs.SetInt("CurrentTileIndex", currentTileIndex);
+        Turn();
+    }
+
+    private void Turn()
+    {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            int diceResult =RollDice();
+            int diceResult = RollDice();
             Debug.Log("Dice result: " + diceResult);
             StartCoroutine(MovePawn(diceResult));
         }
-    }
+        ChangeTurn();
 
+    }
     void OnApplicationQuit()
     {
         PlayerPrefs.DeleteAll();
@@ -263,9 +269,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void ChangeTurn()
+    { }
 
-    // Adaugă această metodă pentru a salva indexul curent al tile-ului în timpul interacțiunii cu DialogueScene
-    public void ContinueFromCurrentPosition()
+
+        // Adaugă această metodă pentru a salva indexul curent al tile-ului în timpul interacțiunii cu DialogueScene
+        public void ContinueFromCurrentPosition()
     {
         MovePawnToPosition(path[currentTileIndex]);
     }
