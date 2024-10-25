@@ -156,26 +156,34 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("Ai ajuns la finalul traseului.");
                 currentPawnTileIndex = path.Count - 1;
-                break;
+
+                // Move the player to position (8, 4)
+                Vector2 endPosition = new Vector2(8, 4);
+                MovePawnToPosition(endPosition);
+
+                currentTileIndices[currentPlayerIndex] = path.IndexOf(endPosition); // Update player's current tile index
+
+                Debug.Log("Player moved to the special position (8, 4).");
+                yield break; // Exit the coroutine since player has reached the destination
             }
 
             Vector2 startPosition = currentPawn.transform.position;
-            Vector2 endPosition = path[currentPawnTileIndex];
+            Vector2 nextPosition = path[currentPawnTileIndex];
 
-            float journeyLength = Vector2.Distance(startPosition, endPosition);
+            float journeyLength = Vector2.Distance(startPosition, nextPosition);
             float startTime = Time.time;
 
-            while (Vector2.Distance(currentPawn.transform.position, endPosition) > 0.01f)
+            while (Vector2.Distance(currentPawn.transform.position, nextPosition) > 0.01f)
             {
                 float distCovered = (Time.time - startTime) * 3f;
                 float fractionOfJourney = distCovered / journeyLength;
 
-                currentPawn.transform.position = Vector2.Lerp(startPosition, endPosition, fractionOfJourney);
+                currentPawn.transform.position = Vector2.Lerp(startPosition, nextPosition, fractionOfJourney);
                 yield return null;
             }
 
             // Actualizează poziția pionului curent în array
-            MovePawnToPosition(endPosition);
+            MovePawnToPosition(nextPosition);
         }
 
         currentTileIndices[currentPlayerIndex] = currentPawnTileIndex; // Actualizează array-ul cu poziția pionului curent
@@ -186,6 +194,7 @@ public class PlayerController : MonoBehaviour
         // După mutare, trecem la următorul jucător
         ChangeTurn();
     }
+
 
 
     public int RollDice()
