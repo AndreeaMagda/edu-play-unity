@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,7 +11,6 @@ public class PlayerController : MonoBehaviour
     public Image diceImage;
     public Sprite[] diceSprites;
     private int currentPlayerIndex = 0; // Jucătorul curent
-    private int currentTileIndex = 0;
     private List<Vector2> path;
     private bool gameStarted = false;
 
@@ -21,34 +21,11 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        gameStarted = true;
         // Initializează array-ul de poziții pentru fiecare jucător
         currentTileIndices = new int[pawns.Length];
 
-        // Încarcă pozițiile pionilor din PlayerPrefs
-        for (int i = 0; i < pawns.Length; i++)
-        {
-            currentTileIndices[i] = PlayerPrefs.GetInt("CurrentTileIndex_Player" + i, 0);
-
-
-            switch (i)
-            {
-                case 1:
-                    currentTileIndices[i] = PlayerPrefs.GetInt("CurrentTileIndex_Player1");
-                    break;
-                case 2:
-                    currentTileIndices[i] = PlayerPrefs.GetInt("CurrentTileIndex_Player2");
-                    break;
-                case 3:
-                    currentTileIndices[i] = PlayerPrefs.GetInt("CurrentTileIndex_Player3");
-                    break;
-                case 4:
-                    currentTileIndices[i] = PlayerPrefs.GetInt("CurrentTileIndex_Player4");
-                    break;
-                default:
-                    break;
-            }
-        }
-
+        LoadFileData();
 
         PathGenerator pathGenerator = GetComponent<PathGenerator>();
         if (pathGenerator != null)
@@ -62,7 +39,6 @@ public class PlayerController : MonoBehaviour
         }
 
         gameStarted = PlayerPrefs.GetInt("GameStarted") == 1;
-        currentTileIndex = PlayerPrefs.GetInt("CurrentTileIndex");
         specialTileManager = GetComponent<SpecialTileManager>();
         if (specialTileManager == null)
         {
@@ -75,27 +51,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
         PlayerPrefs.SetInt("GameStarted", gameStarted ? 1 : 0);
-        for (int i = 0; i < pawns.Length; i++)
-        {
-            switch (i)
-            { case 1:
-                    PlayerPrefs.SetInt("CurrentTileIndex_Player1", currentTileIndices[1]);
-                    break;
-                case 2:
-                    PlayerPrefs.SetInt("CurrentTileIndex_Player2", currentTileIndices[2]);
-                    break;
-                case 3:
-                    PlayerPrefs.SetInt("CurrentTileIndex_Player3", currentTileIndices[3]);
-                    break;
-                case 4:
-                    PlayerPrefs.SetInt("CurrentTileIndex_Player4", currentTileIndices[4]);
-                    break;
-                default:
-                    break;
-            }
-            PlayerPrefs.SetInt("CurrentTileIndex_Player" + i, currentTileIndices[i]);
-        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             int diceResult = RollDice();
@@ -104,9 +61,86 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void SavePlayerData()
+    {
+        string filePath = Application.persistentDataPath + "/PlayerData.txt";
+
+        using (StreamWriter writer = new StreamWriter(filePath))
+        {
+            for (int i = 0; i < pawns.Length; i++)
+            {
+                writer.WriteLine(currentTileIndices[i]); // Save tile index (integer)
+                Vector3 pawnPosition = pawns[i].transform.position;  // Get world position
+                writer.WriteLine(pawnPosition.x + "," + pawnPosition.y + "," + pawnPosition.z);  // Save world position
+            }
+            Debug.Log("Data saved to " + filePath);
+        }
+    }
+
+    void LoadFileData()
+    {
+        string filePath = Application.persistentDataPath + "/PlayerData.txt";
+
+        if (File.Exists(filePath))
+        {
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                for (int i = 0; i < pawns.Length; i++)
+                {
+                    // Load tile index (logical position)
+                    string tileIndexString = reader.ReadLine();
+                    if (!string.IsNullOrEmpty(tileIndexString))
+                    {
+                        if (int.TryParse(tileIndexString, out int tileIndex))
+                        {
+                            currentTileIndices[i] = tileIndex;
+                        }
+                        else
+                        {
+                            Debug.LogError("Invalid tile index format for player " + i);
+                            continue;  // Skip to the next iteration if invalid format
+                        }
+                    }
+
+                    // Load world position
+                    string positionString = reader.ReadLine();
+                    if (!string.IsNullOrEmpty(positionString))
+                    {
+                        string[] positionValues = positionString.Split(',');
+                        if (positionValues.Length == 3 &&
+                            float.TryParse(positionValues[0], out float posX) &&
+                            float.TryParse(positionValues[1], out float posY) &&
+                            float.TryParse(positionValues[2], out float posZ))
+                        {
+                            pawns[i].transform.position = new Vector3(posX, posY, posZ);
+                        }
+                        else
+                        {
+                            Debug.LogError("Invalid position format for player " + i);
+                            continue;  // Skip to the next iteration if invalid format
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Save file not found.");
+        }
+    }
     private void OnApplicationQuit()
     {
-        PlayerPrefs.DeleteAll();
+        string filePath = Application.persistentDataPath + "/PlayerData.txt";
+
+        // Overwrite the file with an empty string
+        if (File.Exists(filePath))
+        {
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                writer.Write("");  // This will clear the file content
+            }
+            Debug.Log("File cleared at " + filePath);
+        }
     }
 
     IEnumerator MovePawn(int diceResult)
@@ -167,10 +201,12 @@ public class PlayerController : MonoBehaviour
     {
         pawns[currentPlayerIndex].transform.position = newPosition;
         Debug.Log("Pawn moved to: " + newPosition);
+        SavePlayerData();
     }
 
     void ChangeTurn()
     {
+        SavePlayerData();
         currentPlayerIndex = (currentPlayerIndex + 1) % pawns.Length; // Treci la următorul jucător
         Debug.Log("Este rândul jucătorului " + (currentPlayerIndex + 1));
     }
